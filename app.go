@@ -6,10 +6,9 @@ import (
 	"net/http"
 )
 
-// Ping テスト
-// 名前がintなのにstringなのはご愛嬌
-type Ping struct {
-	Testint string `json:"Testint"`
+// RequestStruct テスト
+type RequestStruct struct {
+	RequestString string `json:"RequestString"`
 }
 
 // 初期化　最初に呼ばれる GAEではmain()は呼ばれない
@@ -26,14 +25,14 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 	// log.Infof(ctx, string(body))
 
 	// レスポンスのテスト
-	// リクエストのjsonを構造体に挿入してパース
-	var ping Ping
-	json.Unmarshal(body, &ping)
-	// log.Infof(ctx, string(ping.Testint))
+	// リクエストパラメータのjsonを構造体にパース
+	var req RequestStruct
+	json.Unmarshal(body, &req)
+	// log.Infof(ctx, string(req.RequestString))
 
 	// 構造体をjsonにパース
-	res, err := json.Marshal(ping)
-	// log.Infof(ctx, string(res))
+	result, err := json.Marshal(req)
+	// log.Infof(ctx, string(result))
 
 	// エラーがあるか
 	if err != nil {
@@ -43,5 +42,5 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 
 	// レスポンスはjsonで返却
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+	w.Write(result)
 }
