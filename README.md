@@ -1,1 +1,1 @@
-# Google App Engine * Google Date Store で チャット
+# Google App Engine * Google Date Store で 簡単なチャットアプリ
